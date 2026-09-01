@@ -1,0 +1,20 @@
+{
+  "compaction": {
+    "enabled": false
+  },
+  "defaultProvider": "xai",
+  "defaultModel": "grok-4.6",
+  "defaultThinkingLevel": "xhigh",
+  "enableSkillCommands": true,
+  "packages": [
+    "npm:pi-subagents",
+    "npm:pi-blackhole",
+    "npm:@plannotator/pi-extension",
+    "npm:pi-web-access",
+    "npm:@xynogen/pix-optimizer"
+  ],
+  "lastChangelogVersion": "0.84.4",
+  "theme": "dark",
+  "tuiMode": "fullscreen",
+  "fullscreenCopyOnSelect": true
+}

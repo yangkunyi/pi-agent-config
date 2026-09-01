@@ -1,0 +1,13 @@
+{
+  "providers": {
+    "anthropic": {
+      "baseUrl": "https://www.highland-api.com/v1"
+    },
+    "openai": {
+      "baseUrl": "https://www.highland-api.com/v1"
+    },
+    "google": {
+      "baseUrl": "https://www.highland-api.com/v1"
+    }
+  }
+}

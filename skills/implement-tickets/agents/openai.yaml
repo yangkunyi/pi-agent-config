@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement Tickets"
+  short_description: "Dispatch tickets to implement subagents"
+policy:
+  allow_implicit_invocation: false
