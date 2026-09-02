@@ -1,35 +1,17 @@
 ---
 name: implement-tickets
 description: >-
-  Dispatch each tracker ticket to the `ticket-implementer` subagent with
-  `/implement <NN> — <title>`. Parent reads `docs/agents/issue-tracker.md`,
-  honors Blocked by, and walks the ready frontier sequentially (依次) or
-  fans out unblocked tickets in worktrees (并行). Use when the user says
-  依次/并行实现 to-tickets, implement tickets with subagents, or runs
-  `/implement-tickets`.
+  Dispatch tracker tickets to ticket-implementer along the ready frontier.
+  Use when the user says 依次, 并行, implement tickets with subagents,
+  to-tickets, or /implement-tickets.
 argument-hint: "[sequential|parallel]"
 ---
 
 # Implement Tickets
 
-You are the parent. List tickets and spawn `ticket-implementer` children. Do not implement, review, or commit. Review happens inside `ticket-implementer`.
+You are the parent dispatcher. Spawn `ticket-implementer` children. Implementation, review, and commit live in the child.
 
-If `ticket-implementer` is missing from `subagent({ action: "list" })`, stop. It lives at `~/.pi/agent/agents/ticket-implementer.md`.
-
-## Mode
-
-- **sequential** — 依次 / sequential / one at a time, or parallel was not said. One ready ticket at a time. Shared cwd. No `worktree`. Direct `subagent` child. Do **not** wrap it in `workflowScript`.
-- **parallel** — 并行 / parallel / fan out. Every currently ready ticket at once. `worktree: true` on each child. One `workflowScript` + `runs.all` for the wave.
-
-## Async (hard)
-
-Every spawn is `async: true`. After launch, say which tickets are running and **end the turn**. Main chat stays free. Pi wakes this parent on completion; continue the loop on that wake.
-
-`async: false` and `bg_wait` block the parent chat. Never use them here.
-
-One writer per cwd. Sequential: do not spawn the next ticket, and do not edit that cwd, while a child is in flight. Parallel: children are isolated by `worktree`; still wait for the wave's wake before applying patches or starting the next wave.
-
-Child `contact_supervisor` is a wake. **Do not answer.** Quote the question to the user and end the turn. When the user replies, forward that text with `subagent_supervisor`. Inventing an answer is forbidden.
+Stop if `ticket-implementer` is missing from `subagent({ action: "list" })`. Agent file: `~/.pi/agent/agents/ticket-implementer.md`.
 
 ## 1. Load tickets
 
@@ -44,32 +26,47 @@ If the list is empty, stop.
 A ticket is **done** when the tracker already marks it resolved or closed, or a child for it succeeded this run.
 A ticket is **ready** when it is not done and every Blocked-by ticket is done.
 
-## 2. Dispatch (this turn)
+## 2. Dispatch
 
-Keep the ready-set and tracker writes in this parent session. Spawn only to run a child. The loop spans turns: launch → yield → wake → record → launch next.
+Pick **mode** once:
 
-**On a completion wake**, for each finished child this wave:
+- **sequential** — 依次, sequential, or parallel was not said. One ready ticket. Shared cwd. Direct `subagent({ agent: "ticket-implementer", async: true, task })` child — not a `workflowScript`.
+- **parallel** — 并行. Every ready ticket in one `workflowScript` + `runs.all`. `worktree: true` on each child.
 
-- Success → treat it done, then record completion on that ticket using the resolve/close path in `docs/agents/issue-tracker.md`. Do not close a parent issue.
-- Failure → mark failed; do not spawn its dependents; continue with tickets that do not depend on it.
+Keep the ready-set and tracker writes in this parent session. Spawn only to run a child.
 
-Then, if this was a parallel wave, do §3 before spawning again.
+Loop across turns: spawn → yield → wake → record → spawn. Every spawn is `async: true`. Name the running tickets and end the turn. (`async: false` and `bg_wait` block the parent chat.)
 
-**Then spawn** only when no in-flight child (sequential) or wave (parallel) remains:
+One writer per cwd. Sequential: the in-flight child holds the cwd. Parallel: worktrees isolate writers; wait for the wave's wake before patches or the next wave.
 
-1. Compute the ready set. Empty while undone tickets remain → stop and name the blockers. Empty and all done → §4.
-2. Sequential: spawn the lowest id as a **direct** child. Parallel: spawn every ready ticket in **one** workflow.
+### On a wake
+
+**Completion.** For each finished child this wave:
+
+- Success → treat it done, then resolve/close that ticket per `docs/agents/issue-tracker.md`. Leave parent issues open.
+- Failure → mark failed; skip its dependents; continue with tickets that do not depend on it.
+
+Then, if this wave was parallel, apply patches (§3) before spawning.
+
+**`contact_supervisor`.** Quote the question to the user and end the turn. On the user's reply, forward that text with `subagent_supervisor`. The parent does not answer the child.
+
+### Spawn
+
+Only when no in-flight child (sequential) or wave (parallel) remains.
+
+1. Compute the ready set. Empty with undone tickets → stop and name the blockers. Empty and all done → §4.
+2. Sequential: lowest id, direct child. Parallel: every ready ticket, one workflow.
 3. `async: true`. Name the running tickets. End the turn.
 
-**Child task is exactly one line, no other text:**
+Child task, one line, em dash (`—`):
 
 ```
 /implement <id> — <title>
 ```
 
-`<id>` is the tracker id as published (`01` locally, `#123` on GitHub). `<title>` is the ticket title. The dash is an em dash (`—`).
+`<id>` is the tracker id as published (`01` locally, `#123` on GitHub). `<title>` is the ticket title.
 
-Sequential, one child — no workflow shell:
+Sequential:
 
 ```js
 subagent({
@@ -79,7 +76,7 @@ subagent({
 })
 ```
 
-Parallel wave, isolated writers. Stable key per ticket (`t01`, `t03`). Only tickets that are ready in this wave:
+Parallel. Stable key per ticket (`t01`, `t03`). Ready tickets only:
 
 ```js
 subagent({
@@ -94,11 +91,11 @@ subagent({
 })
 ```
 
-## 3. After a parallel wave
+## 3. Parallel patches
 
-On the wave's wake: managed worktrees capture a patch and a handoff, then clean themselves. Do not `git worktree remove` by hand.
+On a parallel wave's completion wake: managed worktrees capture a patch and a handoff, then clean themselves.
 
-For each successful child, in id order, apply that child's captured patch from `artifactPaths`. Conflict → stop and report. Skip failed children; do not apply their patches.
+For each successful child, in id order, apply that child's captured patch from `artifactPaths`. Conflict → stop and report. Skip failed children.
 
 ## 4. Report
 
