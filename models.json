@@ -21,37 +21,74 @@
           "id": "glm-4.6v",
           "name": "GLM-4.6V",
           "reasoning": true,
-          "input": ["text", "image"],
-          "cost": { "input": 0.3, "output": 0.9, "cacheRead": 0, "cacheWrite": 0 },
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.3,
+            "output": 0.9,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
           "contextWindow": 128000,
-          "maxTokens": 32768
+          "maxTokens": 32768,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-4.7",
           "name": "GLM-4.7",
           "reasoning": true,
-          "input": ["text"],
-          "cost": { "input": 0.6, "output": 2.2, "cacheRead": 0.11, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.6,
+            "output": 2.2,
+            "cacheRead": 0.11,
+            "cacheWrite": 0
+          },
           "contextWindow": 204800,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5-turbo",
           "name": "GLM-5-Turbo",
           "reasoning": true,
-          "input": ["text"],
-          "cost": { "input": 1.2, "output": 4, "cacheRead": 0.24, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.2,
+            "output": 4,
+            "cacheRead": 0.24,
+            "cacheWrite": 0
+          },
           "contextWindow": 200000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.1",
           "name": "GLM-5.1",
           "reasoning": true,
-          "input": ["text"],
-          "cost": { "input": 1.4, "output": 4.4, "cacheRead": 0.26, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.26,
+            "cacheWrite": 0
+          },
           "contextWindow": 200000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.2",
@@ -66,10 +103,19 @@
             "xhigh": null,
             "max": "max"
           },
-          "input": ["text"],
-          "cost": { "input": 1.4, "output": 4.4, "cacheRead": 0.26, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.26,
+            "cacheWrite": 0
+          },
           "contextWindow": 1000000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.2-highspeed",
@@ -84,10 +130,19 @@
             "xhigh": null,
             "max": "max"
           },
-          "input": ["text"],
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
           "contextWindow": 1000000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.3",
@@ -102,10 +157,19 @@
             "xhigh": null,
             "max": "max"
           },
-          "input": ["text"],
-          "cost": { "input": 1.4, "output": 4.4, "cacheRead": 0.26, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.26,
+            "cacheWrite": 0
+          },
           "contextWindow": 1000000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.3-flash",
@@ -120,10 +184,20 @@
             "xhigh": null,
             "max": "max"
           },
-          "input": ["text", "image"],
-          "cost": { "input": 0.075, "output": 0.25, "cacheRead": 0.015, "cacheWrite": 0 },
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.075,
+            "output": 0.25,
+            "cacheRead": 0.015,
+            "cacheWrite": 0
+          },
           "contextWindow": 1000000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5.3-highspeed",
@@ -138,21 +212,43 @@
             "xhigh": null,
             "max": "max"
           },
-          "input": ["text"],
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
           "contextWindow": 1000000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         },
         {
           "id": "glm-5v-turbo",
           "name": "GLM-5V-Turbo",
           "reasoning": true,
-          "input": ["text", "image"],
-          "cost": { "input": 1.2, "output": 4, "cacheRead": 0.24, "cacheWrite": 0 },
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.2,
+            "output": 4,
+            "cacheRead": 0.24,
+            "cacheWrite": 0
+          },
           "contextWindow": 200000,
-          "maxTokens": 131072
+          "maxTokens": 131072,
+          "api": "anthropic-messages",
+          "baseUrl": "https://www.highland-api.com"
         }
       ]
+    },
+    "deepseek": {
+      "baseUrl": "https://www.highland-api.com/v1"
     }
   }
 }
