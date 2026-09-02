@@ -6,6 +6,11 @@
   "defaultModel": "grok-4.6",
   "defaultThinkingLevel": "xhigh",
   "enableSkillCommands": true,
+  "enabledModels": [
+    "zai-coding-cn/*",
+    "deepseek/*",
+    "xai/*"
+  ],
   "packages": [
     "npm:pi-subagents",
     "npm:pi-blackhole",
