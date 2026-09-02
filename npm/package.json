@@ -2,10 +2,10 @@
   "name": "pi-extensions",
   "private": true,
   "dependencies": {
-    "@plannotator/pi-extension": "^0.27.10",
+    "@plannotator/pi-extension": "^0.27.11",
     "@xynogen/pix-optimizer": "^1.1.28",
     "pi-blackhole": "^0.4.10",
-    "pi-subagents": "^0.62.0",
+    "pi-subagents": "^0.63.0",
     "pi-web-access": "^0.27.0"
   }
 }

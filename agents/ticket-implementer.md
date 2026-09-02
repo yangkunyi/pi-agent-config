@@ -19,7 +19,7 @@ skills:
   - resolving-merge-conflicts
   - wait-what
   - handoff
-defaultContext: fork
+defaultContext: fresh
 acceptanceRole: writer
 timeoutMs: 7200000
 ---
