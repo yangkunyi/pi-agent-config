@@ -8,6 +8,9 @@
     },
     "google": {
       "baseUrl": "https://www.highland-api.com/v1"
+    },
+    "zai-coding-cn": {
+      "baseUrl": "https://www.highland-api.com/v1"
     }
   }
 }
