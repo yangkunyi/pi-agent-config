@@ -18,8 +18,8 @@ If `ticket-implementer` is missing from `subagent({ action: "list" })`, stop. It
 
 ## Mode
 
-- **sequential** — 依次 / sequential / one at a time, or parallel was not said. One ready ticket at a time. Shared cwd. No `worktree`.
-- **parallel** — 并行 / parallel / fan out. Every currently ready ticket at once. `worktree: true` on each child.
+- **sequential** — 依次 / sequential / one at a time, or parallel was not said. One ready ticket at a time. Shared cwd. No `worktree`. Direct `subagent` child. Do **not** wrap it in `workflowScript`.
+- **parallel** — 并行 / parallel / fan out. Every currently ready ticket at once. `worktree: true` on each child. One `workflowScript` + `runs.all` for the wave.
 
 ## Async (hard)
 
@@ -29,7 +29,7 @@ Every spawn is `async: true`. After launch, say which tickets are running and **
 
 One writer per cwd. Sequential: do not spawn the next ticket, and do not edit that cwd, while a child is in flight. Parallel: children are isolated by `worktree`; still wait for the wave's wake before applying patches or starting the next wave.
 
-Reply to `contact_supervisor` with `subagent_supervisor` if a child asks. That is a wake, not a reason to block.
+Child `contact_supervisor` is a wake. **Do not answer.** Quote the question to the user and end the turn. When the user replies, forward that text with `subagent_supervisor`. Inventing an answer is forbidden.
 
 ## 1. Load tickets
 
@@ -46,7 +46,7 @@ A ticket is **ready** when it is not done and every Blocked-by ticket is done.
 
 ## 2. Dispatch (this turn)
 
-The workflow sandbox has no filesystem. Keep the ready-set and tracker writes in this parent session. Spawn only to run a child. The loop spans turns: launch → yield → wake → record → launch next.
+Keep the ready-set and tracker writes in this parent session. Spawn only to run a child. The loop spans turns: launch → yield → wake → record → launch next.
 
 **On a completion wake**, for each finished child this wave:
 
@@ -58,7 +58,7 @@ Then, if this was a parallel wave, do §3 before spawning again.
 **Then spawn** only when no in-flight child (sequential) or wave (parallel) remains:
 
 1. Compute the ready set. Empty while undone tickets remain → stop and name the blockers. Empty and all done → §4.
-2. Sequential: spawn the lowest id. Parallel: spawn every ready ticket in one workflow.
+2. Sequential: spawn the lowest id as a **direct** child. Parallel: spawn every ready ticket in **one** workflow.
 3. `async: true`. Name the running tickets. End the turn.
 
 **Child task is exactly one line, no other text:**
@@ -69,18 +69,17 @@ Then, if this was a parallel wave, do §3 before spawning again.
 
 `<id>` is the tracker id as published (`01` locally, `#123` on GitHub). `<title>` is the ticket title. The dash is an em dash (`—`).
 
-Sequential, one child:
+Sequential, one child — no workflow shell:
 
 ```js
 subagent({
   async: true,
-  workflowScript: `return runs.run("t01", { agent: "ticket-implementer", task: "/implement 01 — title" })`
+  agent: "ticket-implementer",
+  task: "/implement 01 — title"
 })
 ```
 
-Use a stable key per ticket (`t01`, `t02`).
-
-Parallel wave, isolated writers:
+Parallel wave, isolated writers. Stable key per ticket (`t01`, `t03`). Only tickets that are ready in this wave:
 
 ```js
 subagent({
@@ -94,8 +93,6 @@ subagent({
   `
 })
 ```
-
-Only include tickets that are ready in this wave.
 
 ## 3. After a parallel wave
 
