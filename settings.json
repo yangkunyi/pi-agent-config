@@ -9,7 +9,8 @@
   "enabledModels": [
     "zai-coding-cn/*",
     "deepseek/*",
-    "xai/*"
+    "xai/*",
+    "google/gemini-3.8-flash"
   ],
   "packages": [
     "npm:pi-subagents",

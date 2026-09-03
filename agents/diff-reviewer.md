@@ -4,6 +4,9 @@ description: >-
   Read-only git-diff reviewer with bash. Use as a nested Standards or
   Spec axis under ticket-implementer / code-review. Not a writer.
 tools: read, grep, find, ls, bash
+model: google/gemini-3.8-flash
+fallbackModels: xai/grok-4.6
+thinking: high
 systemPromptMode: append
 inheritProjectContext: true
 inheritSkills: false
