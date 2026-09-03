@@ -7,31 +7,7 @@
       "baseUrl": "https://www.highland-api.com/v1"
     },
     "google": {
-      "baseUrl": "https://www.highland-api.com/v1beta",
-      "models": [
-        {
-          "id": "gemini-3.8-flash",
-          "name": "Gemini 3.8 Flash",
-          "api": "google-generative-ai",
-          "reasoning": true,
-          "input": ["text", "image"],
-          "contextWindow": 1048576,
-          "maxTokens": 65536,
-          "cost": {
-            "input": 0.75,
-            "output": 3.75,
-            "cacheRead": 0.075,
-            "cacheWrite": 0
-          },
-          "thinkingLevelMap": {
-            "off": null,
-            "minimal": null,
-            "low": "low",
-            "medium": "medium",
-            "high": "high"
-          }
-        }
-      ]
+      "baseUrl": "https://www.highland-api.com/v1beta"
     },
     "zai-coding-cn": {
       "baseUrl": "https://slb-v1.api.fan/v1"
