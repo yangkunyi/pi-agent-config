@@ -1,0 +1,59 @@
+[cli]
+installer = "internal"
+
+[models]
+default = "grok-4.6"
+web_search = "grok-4.6"
+default_reasoning_effort = "xhigh"
+
+[features]
+telemetry = false
+feedback = false
+remote_fetch = true
+managed_config = false
+
+[telemetry]
+trace_upload = false
+mixpanel_enabled = false
+otel_enabled = false
+otel_metrics_exporter = "none"
+otel_logs_exporter = "none"
+
+[harness]
+disable_workspace_teleport = true
+
+[ui]
+max_thoughts_width = 120
+fork_secondary_model = "grok-4.6"
+yolo = false
+compact_mode = true
+permission_mode = "always-approve"
+theme = "rosepine-moon"
+show_timeline = true
+
+[marketplace]
+default_skills_installs_purged = true
+official_marketplace_auto_installed = true
+
+[[marketplace.sources]]
+name = "xAI Official"
+git = "https://github.com/xai-org/plugin-marketplace.git"
+
+[skills]
+ignore = [
+    "~/.grok/bundled/skills/code-review",
+    "~/.grok/bundled/skills/implement",
+]
+paths = []
+disabled = []
+server_skill_dirs = []
+bundled_skill_dirs = []
+
+[privacy]
+privacy_banner_acked = "2026-08-13T05:22:37Z"
+
+[session]
+auto_compact_threshold_percent = 40
+
+[subagents]
+max_depth = 2
