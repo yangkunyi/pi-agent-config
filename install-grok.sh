@@ -7,7 +7,11 @@ SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/grok"
 DEST="$HOME/.grok"
 STAMP="$(date +%Y%m%dT%H%M%SZ)"
 
-LINK=("skills" "agents" "AGENTS.md" "config.toml")
+# config.toml deliberately NOT linked: grok updates实体化 symlink, and model
+# backend switching (grok-model fan/official) rewrites the local copy, so it
+# must stay a machine-local regular file. Use grok/config.toml as template.
+# fan-api.key likewise stays local (~/.grok/fan-api.key, chmod 600).
+LINK=("skills" "agents" "AGENTS.md")
 
 backup() {
   local target="$1"
