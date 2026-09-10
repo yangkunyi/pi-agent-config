@@ -13,3 +13,5 @@ Run typechecking regularly, single test files regularly, and the full test suite
 Once done, use /code-review to review the work.
 
 Commit your work to the current branch.
+
+Leave the ticket file's `Status:` line unchanged (`BLOCKED` / `READY` / `RUNNING` / `MERGING` / `CONFLICT` / `RESOLVING` / `MERGED` / `FAILED`). Those values are owned by `/to-tickets` and the Orchestrator, not by implement.

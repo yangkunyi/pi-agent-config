@@ -2,8 +2,7 @@
 name: ticket-implementer
 description: >-
   Ticket implementer with nested two-axis code-review. Use when
-  implement-tickets dispatches a child, or one tracker ticket should
-  be implemented, reviewed, then committed.
+  one tracker ticket should be implemented, reviewed, then committed.
 tools: read, grep, find, ls, bash, edit, write, subagent, contact_supervisor
 systemPromptMode: append
 inheritProjectContext: true

@@ -57,7 +57,7 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 4. Spawn both sub-agents in parallel
 
-`spawn_subagent` with `subagent_type: "explore"` for both axes.
+`spawn_subagent` with `subagent_type: "general-purpose"` for both axes. Do NOT use `explore`: its role default disables thinking, and relays serving always-thinking models (e.g. glm-5.3-flash via api.fan) reject that request with a 500.
 
 **Standards sub-agent prompt** — include:
 

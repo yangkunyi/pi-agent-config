@@ -7,8 +7,31 @@ Issues and specs for this repo live as markdown files in `.scratch/`.
 - One feature per directory: `.scratch/<feature-slug>/`
 - The spec is `.scratch/<feature-slug>/spec.md`
 - Implementation issues are one file per ticket at `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` — never a single combined tickets file
-- Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
+- `Status:` near the top of each issue file: implementation tickets use the lifecycle below; wayfinder tickets use `claimed`/`resolved`; incoming triage uses `triage-labels.md`
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
+
+## Implementation tickets
+
+`/to-tickets` writes these files. An Orchestrator may drain them.
+
+- Skip files with `Type: research` / `prototype` / `grilling` / `task` (those belong to `/wayfinder`).
+- Ticket id is `<feature-slug>/<NN>`. Same-Feature `Blocked by` may list `NN` alone; cross-Feature must use `<feature-slug>/<NN>`.
+- `Blocked by` is declared at publish time. Do not infer dependencies from code.
+- **Status** is the implementation lifecycle, one value at a time:
+
+| Status | Who writes it | Meaning |
+| --- | --- | --- |
+| `BLOCKED` | `/to-tickets` (has blockers) or Orchestrator | A blocker is not `MERGED` |
+| `READY` | `/to-tickets` (no blockers) or Orchestrator | All blockers `MERGED`; may start |
+| `RUNNING` | Orchestrator | Implementation agent is live |
+| `MERGING` | Orchestrator | Merging the ticket branch into main |
+| `CONFLICT` | Orchestrator | `git merge` left `MERGE_HEAD` |
+| `RESOLVING` | Orchestrator | Conflict agent is live |
+| `MERGED` | Orchestrator, only after merge succeeds | In main; unblocks downstream; skip on the next run |
+| `FAILED` | Orchestrator | Git contract failed; dependents stay BLOCKED; the run continues |
+
+- `/to-tickets` initial Status: `READY` if `Blocked by` is none, else `BLOCKED`.
+- `/implement` and conflict resolution leave `Status:` unchanged.
 
 ## When a skill says "publish to the issue tracker"
 
