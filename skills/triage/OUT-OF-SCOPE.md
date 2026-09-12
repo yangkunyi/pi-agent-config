@@ -2,7 +2,7 @@
 
 The `.out-of-scope/` directory in a repo stores persistent records of rejected feature requests. It serves two purposes:
 
-1. **Institutional memory** — why a feature was rejected, so the reasoning isn't lost when the issue is closed
+1. **Institutional memory** — why a feature was rejected, so the reasoning isn't lost once the request is turned down
 2. **Deduplication** — when a new issue comes in that matches a prior rejection, the skill can surface the previous decision instead of re-litigating it
 
 ## Directory structure
@@ -77,7 +77,7 @@ During triage (Step 1: Gather context), read all files in `.out-of-scope/`. When
 
 The maintainer may:
 
-- **Confirm** — the new issue gets added to the existing file's "Prior requests" list, then closed
+- **Confirm** — the new issue gets added to the existing file's "Prior requests" list, then given the `wontfix` role
 - **Reconsider** — the out-of-scope file gets deleted or updated, and the issue proceeds through normal triage
 - **Disagree** — the issues are related but distinct, proceed with normal triage
 
@@ -85,7 +85,7 @@ The maintainer may:
 
 Only when an **enhancement** (not a bug) is *rejected* as `wontfix`. This applies to enhancement PRs exactly as it does to issues — a rejected PR is recorded here so the same request doesn't return as fresh code.
 
-Do **not** write here when something is closed as `wontfix` because it's **already implemented**. That's a built feature, not a rejected one; recording it would poison the dedup checks with false rejections. Instead, the closing comment points to where the feature already lives.
+Do **not** write here when something is given `wontfix` because it's **already implemented**. That's a built feature, not a rejected one; recording it would poison the dedup checks with false rejections. Instead, the comment points to where the feature already lives.
 
 The flow:
 
@@ -94,7 +94,7 @@ The flow:
 3. If yes: append the new issue to the "Prior requests" list
 4. If no: create a new file with the concept name, decision, reason, and first prior request
 5. Post a comment on the issue explaining the decision and mentioning the `.out-of-scope/` file
-6. Close the issue with the `wontfix` label
+6. Apply the `wontfix` role — the tracker's own move, not a status: on a store-backed Target the issue stays `open`, because a closure there means the work is in Main
 
 ## Updating or removing out-of-scope files
 

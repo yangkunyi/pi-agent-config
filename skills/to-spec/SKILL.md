@@ -1,12 +1,12 @@
 ---
 name: to-spec
-description: Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.
+description: Turn the current conversation into a spec — no interview, just synthesis of what you've already discussed.
 disable-model-invocation: true
 ---
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+The tracker's contract is `docs/agents/issue-tracker.md`; run `/setup-matt-pocock-skills` if it is missing. The contract owns where a spec lives and how the issues it produces reach the tracker.
 
 ## Process
 
@@ -16,7 +16,7 @@ The issue tracker and triage label vocabulary should have been provided to you �
 
 Check with the user that these seams match their expectations.
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. Write the spec using the template below, and place it where the contract's spec convention puts it. On a store-backed Target the spec is a git document at the contract's spec path (`docs/specs/<date>-<slug>.md`) — there is no spec issue and no container tier — and the `ready-for-agent` gate label is `/to-tickets`' job at publication: it goes on the issues a spec produces, and this skill applies no triage role of its own.
 
 <spec-template>
 
