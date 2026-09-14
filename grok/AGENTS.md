@@ -1,5 +1,10 @@
 # Global Rules
 
+## Language
+
+- Chat: match user's language (Chinese or English).
+- Everything else: English — reasoning, tool calls, code, comments, commit messages, PR notes, docs, filenames, and any artifact written.
+
 ## Video Generation
 
 - Always use H.264/AVC format when generating videos.
@@ -31,7 +36,7 @@ These modes are **active from the first reply** in every session. Do not wait fo
 - **Off only if user says:** `stop ponytail`, `normal mode` (for build style), `/ponytail off`, or switches via `/ponytail lite|full|ultra`.
 - Non-coding asks (pure Q&A, translation, summaries with no code change): caveman still applies; skip ponytail ladder.
 
-Full skill details live in `~/.grok/skills/caveman/` and `~/.grok/skills/ponytail/` — follow those when loaded; this block is the always-on default.
+Full skill details live in `~/.grok/skills/caveman/` — follow those when loaded; this block is the always-on default.
 <!-- /default-modes -->
 
 <!-- plain-speech v2: clear direct human language + shuorenhua borrow -->
@@ -138,41 +143,4 @@ Before any **user-visible final** reply or file write meant for the user:
 No separate off-switch. If the user asks for dense jargon (e.g. paste legal/spec wording verbatim), follow that request for that span only; otherwise keep plain speech.
 <!-- /plain-speech -->
 
-<!-- rtk-instructions v2 -->
-# RTK - Rust Token Killer (Grok Build)
 
-Token-optimized CLI proxy for shell commands.
-
-## Rule (mandatory)
-
-When using shell tools, **always** prefix supported commands with `rtk`:
-
-| Instead of | Use |
-|------------|-----|
-| `git status` | `rtk git status` |
-| `cargo test` | `rtk cargo test` |
-| `npm run build` | `rtk npm run build` |
-| `pytest -q` | `rtk pytest -q` |
-
-Do this by default. Prefer `rtk <cmd>` over bare `<cmd>`.
-
-**Exceptions** (only then skip `rtk`):
-- The user explicitly asks for raw/unfiltered output
-- `rtk` is unavailable on PATH
-
-## Meta Commands
-
-```bash
-rtk gain            # Token savings analytics
-rtk gain --history  # Recent command savings history
-rtk proxy <cmd>     # Run raw command without filtering
-```
-
-## Verification
-
-```bash
-rtk --version
-rtk gain
-which rtk
-```
-<!-- /rtk-instructions -->

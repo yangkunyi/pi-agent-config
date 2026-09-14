@@ -11,7 +11,9 @@ STAMP="$(date +%Y%m%dT%H%M%SZ)"
 # backend switching (grok-model fan/official) rewrites the local copy, so it
 # must stay a machine-local regular file. Use grok/config.toml as template.
 # fan-api.key likewise stays local (~/.grok/fan-api.key, chmod 600).
-LINK=("skills" "agents" "AGENTS.md")
+# skills is NOT linked from this repo any more: the shared root ~/.agents/skills holds every
+# skill (ADR-0001), so grok gets a link into that instead (below).
+LINK=("agents" "AGENTS.md")
 
 backup() {
   local target="$1"
@@ -27,5 +29,10 @@ for name in "${LINK[@]}"; do
   ln -sfn "$SRC/$name" "$DEST/$name"
   echo "linked: $DEST/$name"
 done
+
+# skills: one shared tree, owned by cc-switch, every agent links or reads it directly
+backup "$DEST/skills"
+ln -sfn "$HOME/.agents/skills" "$DEST/skills"
+echo "linked: $DEST/skills -> $HOME/.agents/skills"
 
 echo "done. remember: run 'grok' once on this machine to create local auth.json"
